@@ -1,0 +1,37 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "project template",
+  "main": "index.js",
+  "dependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0",
+    "husky": "^4.2.3",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-angular": "^8.3.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucaLJX/Project_Template.git"
+  },
+  "author": "luca_ljx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LucaLJX/Project_Template/issues"
+  },
+  "homepage": "https://github.com/LucaLJX/Project_Template#readme",
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  }
+}
