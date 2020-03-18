@@ -33,10 +33,28 @@
 </template>
 
 <script>
+import Http from '@/utils/http'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  async mounted () {
+    await this.getData()
+    console.log('完成')
+  },
+  methods: {
+    async getData () {
+      const result = await Http.get(
+        'http://localhost:8080/api/lottery/types',
+        {
+          key: 'd1f00be1962b53cbd89343e89eecc6c9'
+        }
+      )
+      console.log('请求成功')
+      console.log(result)
+    }
   }
 }
 </script>
