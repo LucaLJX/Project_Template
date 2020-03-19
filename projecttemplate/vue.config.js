@@ -13,7 +13,7 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/api': {//http://apis.juhe.cn/lottery/types?key=d1f00be1962b53cbd89343e89eecc6c9
+      '/api': {
         target: 'http://apis.juhe.cn/',   // target表示代理的服务器url
         changeOrigin: true,
         pathRewrite: {     // pathRewrite表示路径重写，key表示一个正则，value表示别名 

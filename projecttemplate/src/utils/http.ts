@@ -12,13 +12,13 @@ const instance = axios.create({
 
 // 请求前拦截
 instance.interceptors.request.use(
-  (config) => {
+  config => {
     // 请求超时时间
     const conf = config
     conf.timeout = TIME_OUT
     return conf
   },
-  (err) => {
+  err => {
     console.log('请求超时')
     return Promise.reject(err)
   }
@@ -29,7 +29,9 @@ instance.interceptors.response.use(
   response => {
     // 响应拦截
     // 不是系统接口直接返回response
-    if (response.data[CODE_KEY] === undefined) return response
+    if (response.data[CODE_KEY] === undefined) {
+      return response
+    }
     if (response.data[CODE_KEY] !== 0) {
       return Promise.reject(response)
       // message.error(response.data.msg)
@@ -61,7 +63,7 @@ export default class Http {
    * @param {*} url
    * @param {*} params
    */
-  static get (url, params) {
+  public static get<T> (url: string, params: T) {
     return instance({
       method: 'get',
       headers: {
@@ -78,15 +80,15 @@ export default class Http {
    * @param {*} url
    * @param {*} params
    */
-  static post (url, params) {
+  public static post<T> (url: string, params: T) {
     return instance({
       method: 'post',
       url: `${baseURL}${url}`,
       data: params,
       headers: {
         'Content-Type': 'application/json',
-        charset: 'utf-8',
-        token: window.localStorage.getItem('token')
+        'charset': 'utf-8',
+        'token': window.localStorage.getItem('token')
       }
     })
       .then(res => res.data)
@@ -98,7 +100,7 @@ export default class Http {
    * @param {*} params
    * @param {*} type
    */
-  static postParam (url, params, type = 'data') {
+  public static postParam<T> (url: string, params: T, type = 'data') {
     return instance({
       method: 'post',
       url: `${baseURL}${url}`,
@@ -114,7 +116,7 @@ export default class Http {
       ],
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        token: window.localStorage.getItem('token')
+        'token': window.localStorage.getItem('token')
       }
     })
       .then(res => res.data)
@@ -125,9 +127,10 @@ export default class Http {
    * @param {*} url
    * @param {*} data
    */
-  static upload (url, data) {
+  public static upload<T> (url: string, data: T) {
     const formData = new FormData()
     Object.keys(data).forEach(key => {
+      // @ts-ignore
       formData.append(key, data[key])
     })
     return instance.post(url, formData, {

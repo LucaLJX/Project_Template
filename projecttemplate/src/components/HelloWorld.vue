@@ -9,9 +9,9 @@
     <h3>Installed CLI Plugins</h3>
     <ul>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
+      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript" target="_blank" rel="noopener">typescript</a></li>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
       <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
     </ul>
     <h3>Essential Links</h3>
     <ul>
@@ -32,30 +32,12 @@
   </div>
 </template>
 
-<script>
-import Http from '@/utils/http'
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  async mounted () {
-    await this.getData()
-    console.log('完成')
-  },
-  methods: {
-    async getData () {
-      const result = await Http.get(
-        '/api/lottery/types',
-        {
-          key: 'd1f0be1962b53cbd89343e89eecc6c9'
-        }
-      )
-      console.log('请求成功')
-      console.log(result)
-    }
-  }
+@Component
+export default class HelloWorld extends Vue {
+  @Prop() private msg!: string
 }
 </script>
 
