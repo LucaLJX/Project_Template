@@ -47,9 +47,9 @@ export default {
   methods: {
     async getData () {
       const result = await Http.get(
-        'http://localhost:8080/api/lottery/types',
+        '/api/lottery/types',
         {
-          key: 'd1f00be1962b53cbd89343e89eecc6c9'
+          key: 'd1f0be1962b53cbd89343e89eecc6c9'
         }
       )
       console.log('请求成功')

@@ -1,8 +1,9 @@
 import axios from 'axios'
 import Qs from 'qs'
 
-const baseURL = 'http://localhost:8080'
-const TIME_OUT = 10000 // 超时时间
+const baseURL = ''
+const TIME_OUT = 8000 // 超时时间
+const CODE_KEY = 'error_code'
 
 const instance = axios.create({
   baseURL,
@@ -28,13 +29,14 @@ instance.interceptors.response.use(
   response => {
     // 响应拦截
     // 不是系统接口直接返回response
-    if (response.data.code === undefined) return response
-    if (response.data.code !== 0) {
-      console.log(response.data.msg)
+    if (response.data[CODE_KEY] === undefined) return response
+    if (response.data[CODE_KEY] !== 0) {
+      return Promise.reject(response)
       // message.error(response.data.msg)
     }
-    if (response.data.code === 18) {
+    if (response.data[CODE_KEY] === 18) {
       window.location.replace('/login')
+      return Promise.reject(response)
     }
     return response
   },
@@ -47,6 +49,7 @@ instance.interceptors.response.use(
     //   console.log('服务器开小差了⊙﹏⊙∥')
     // }
     // message.error(err.message)
+    console.log('err')
     console.log(err.message)
     return Promise.reject(err)
   }
@@ -64,9 +67,10 @@ export default class Http {
       headers: {
         // token: window.localStorage.getItem('token')
       },
-      url: `${baseURL}}${url}`,
+      url: `${baseURL}${url}`,
       params
     })
+      .then(res => res.data)
   }
 
   /**
@@ -85,6 +89,7 @@ export default class Http {
         token: window.localStorage.getItem('token')
       }
     })
+      .then(res => res.data)
   }
 
   /**
@@ -112,6 +117,7 @@ export default class Http {
         token: window.localStorage.getItem('token')
       }
     })
+      .then(res => res.data)
   }
 
   /**
@@ -129,5 +135,6 @@ export default class Http {
         'Content-Type': 'multipart/form-data'
       }
     })
+      .then(res => res.data)
   }
 }
